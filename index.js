@@ -25,6 +25,15 @@ app.get('/', (req, res) =>{   //vi da setting handlebar roi, nen head, foot auto
   res.render('index1');        //Failed to lookup view "index" in views directory "C:\Users\Administrator\Desktop\22\aroma_web\views"
 });
 
+//step 7: video 2 56:00, using sequelize create database auto by routes
+app.get('/sync', (req, res) => {        //DELEGATION i dont understant (res, req), maybe it's a callback
+  const models = require('./models');
+  models.sequelize.sync()
+  .then(()=>{ //if succeed
+    res.send('database :) sync completed!');
+  });
+});
+
 //step 5: change banner, define routes for all files and change link in header.hbs 41:38
 app.get('/:page', (req, res) =>{
   const banners = {
@@ -39,6 +48,7 @@ app.get('/:page', (req, res) =>{
 
 
 //step 6: deploy on heroku 53:03, and and "start": "node index", into pakage.json and .gitignore
+
 
 
 
