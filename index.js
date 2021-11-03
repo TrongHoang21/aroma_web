@@ -1,6 +1,8 @@
 const { log } = require('console');
 const express = require('express');
 const app = express();
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
+const Handlebars = require('handlebars');
 
 //Step 2: cau hinh static
 app.use(express.static(__dirname + '/public'));
@@ -11,8 +13,8 @@ const hbs = expressHbs.create({
   extname: 'hbs',
   defaultLayout: 'layout',
   layoutsDir: __dirname + '/views/layouts/',
-  partialsDir: __dirname + '/views/partials/'
-
+  partialsDir: __dirname + '/views/partials/',
+  handlebars: allowInsecurePrototypeAccess(Handlebars)
 });
 
 app.engine('hbs', hbs.engine);
@@ -20,10 +22,14 @@ app.set('view engine', 'hbs');
 
 //step 4: after tao 1 cay thu muc views 25:53, minh define routes
 
-    //root route
-app.get('/', (req, res) =>{   //vi da setting handlebar roi, nen head, foot auto + body la cho render
-  res.render('index1');        //Failed to lookup view "index" in views directory "C:\Users\Administrator\Desktop\22\aroma_web\views"
-});
+//     //root route
+// app.get('/', (req, res) =>{   //vi da setting handlebar roi, nen head, foot auto + body la cho render
+//   res.render('index1');        //Failed to lookup view "index" in views directory "C:\Users\Administrator\Desktop\22\aroma_web\views"
+// });
+
+//03.11.2021 tach rieng routes ra, chi use() trong nay thoi
+app.use("/", require('./routes/indexRouter'));
+app.use("/products", require('./routes/productRouter'));
 
 //step 7: video 2 56:00, using sequelize create database auto by routes
 app.get('/sync', (req, res) => {        //DELEGATION i dont understant (res, req), maybe it's a callback
@@ -57,3 +63,12 @@ app.set('port', process.env.PORT || 5000);
 app.listen(app.get('port'), () =>{
   console.log(`Sever is running at port ${app.get('port')}`);
 });
+
+
+//https://stackoverflow.com/questions/4037939/powershell-says-execution-of-scripts-is-disabled-on-this-system
+// Set-ExecutionPolicy RemoteSigned
+// Set-ExecutionPolicy Restricted
+
+
+//notes 1:
+//you have to delete database on pgAdmin before seed:all otherwise the id of the tables will be wrong set (chapter3)

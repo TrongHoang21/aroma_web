@@ -1,4 +1,7 @@
 'use strict';
+
+const { startsWith } = require("sequelize/types/lib/operators");
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Categories', {
@@ -7,6 +10,7 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
+    
       },
       name: {
         type: Sequelize.STRING
