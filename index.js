@@ -40,6 +40,8 @@ app.get('/sync', (req, res) => {        //DELEGATION i dont understant (res, req
   });
 });
 
+
+
 //step 5: change banner, define routes for all files and change link in header.hbs 41:38
 app.get('/:page', (req, res) =>{
   const banners = {
