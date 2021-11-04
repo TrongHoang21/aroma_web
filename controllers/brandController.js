@@ -1,10 +1,10 @@
 const controller = {};
 const models = require('../models');
-const Category = models.Category;
+const Brand = models.Brand;
 
 controller.getAll = () => {
     return new Promise((resolve, reject) => {
-        Category
+        Brand
             .findAll({
                 attributes: ['id', 'name', 'imagepath', 'summary']
                 ,include: [{model : models.Product}] //foreign key
