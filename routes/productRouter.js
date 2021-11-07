@@ -18,10 +18,14 @@ router.get('/', (req, res, next) => {
         })
         .then(data => {
             res.locals.colors = data;
-            const prodcutController = require('../controllers/productController');
-            return prodcutController.getAll();
+            const productController = require('../controllers/productController');
+            return productController.getAll();
+
+
         })
         .then(data => {
+            console.log('haha');
+            console.log(data);
             res.locals.products = data;
             res.render('category');
         })
@@ -30,7 +34,14 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/:id', (req, res) => {
-    res.render('single-product');
+    const productController = require('../controllers/productController');
+    productController
+        .getById(req.params.id)
+        .then(product => {
+            res.locals.product = product;
+            res.render('single-product');
+        })
+
 });
 
 module.exports = router;
