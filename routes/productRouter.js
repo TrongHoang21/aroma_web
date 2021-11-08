@@ -2,6 +2,18 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
+
+    //CHECK SYNTAX BLOCK
+    if((req.query.category == null) || isNaN(req.query.category)){
+        req.query.category = 0;
+    }
+    if((req.query.brand == null) || isNaN(req.query.brand)){
+        req.query.brand = 0;
+    }
+    if((req.query.color == null) || isNaN(req.query.color)){
+        req.query.color = 0;
+    }
+
     const categoryController = require('../controllers/categoryController');
     categoryController
         .getAll()
