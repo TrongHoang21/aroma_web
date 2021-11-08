@@ -26,9 +26,22 @@ controller.getAll = (query) => {
             where: {} //default
         };
 
-        if(query.category > 0){
+        if(query.category){
             options.where.categoryId = query.category;
         }
+
+        if(query.brand){
+            options.where.brandId = query.brand;
+        }
+
+        if(query.color){
+            options.include = [{
+                model: models.ProductColor,
+                attributes: [],
+                where: {colorId: query.color}   //START CODING HERE (IN FILTER FUNCTION)
+            }]
+        }
+
         Product
             .findAll(options)
             .then(data => resolve(data))
