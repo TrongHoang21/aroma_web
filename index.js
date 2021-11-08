@@ -18,7 +18,8 @@ const hbs = expressHbs.create({
   partialsDir: __dirname + '/views/partials/',
   handlebars: allowInsecurePrototypeAccess(Handlebars),
   helpers : {
-    createStarList: myHelper1.createStarList
+    createStarList: myHelper1.createStarList,
+    createStars: myHelper1.createStars
   }
 });
 

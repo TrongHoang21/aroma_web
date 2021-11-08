@@ -17,4 +17,17 @@ const str = `<ul class="list">
     return str;
 };
 
+helper.createStars = (star) => {
+    let str = '';
+    let i;
+    for(i=1; i<=star;i++){
+        str += '<i class="fa fa-star"></i>';
+    }
+
+    for(; i <=5; i++){
+        str+= '<i class="fa fa-star disabled"></i>';
+    }
+
+    return str;
+}
 module.exports = helper; 
