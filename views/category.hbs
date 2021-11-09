@@ -1,4 +1,7 @@
 
+  <script src="/vendors/nouislider/nouislider.min.js"></script>
+
+  
   {{> banner1}}
 
 	<!-- ================ category section start ================= -->		  
@@ -273,6 +276,13 @@
   for(let key in params){
     if(!urlParams.has(key)){
       urlParams.append(key, params[key]); //this is to set default value above
+    }
+  }
+
+  for(let key in params){
+    let control = $(`#${key}${urlParams.get(key)}`);  //base on id"" of the control
+    if(control){
+      $(control).prop('checked', true); //i only know that this is set prop for 'control'
     }
   }
 
