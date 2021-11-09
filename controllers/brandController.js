@@ -14,12 +14,12 @@ controller.getAll = (query) => {
             }] //foreign key
         };
 
-        if(query.category){
+        if(query.category > 0){
             options.include[0].where.categoryId = query.category; //this is an array so have to include[0]
         }
 
         //color filter inside brand
-        if(query.color){    //if exists
+        if(query.color > 0){    //if exists
             options.include[0].include = [{ //include because db color donot connect directly to brand
                 model: models.ProductColor,
                 attributes: [],
