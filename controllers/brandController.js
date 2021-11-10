@@ -2,6 +2,8 @@ const controller = {};
 const { query } = require('express');
 const models = require('../models');
 const Brand = models.Brand;
+const Sequelize = require('sequelize');
+const Opr = Sequelize.Op;
 
 controller.getAll = (query) => {
     return new Promise((resolve, reject) => {
@@ -10,7 +12,12 @@ controller.getAll = (query) => {
             ,include: [{
                 model : models.Product,
                 attributes: ['id'], //id product
-                where: {}       //attr catId in product, so 'where' have to be in this scope
+                where: {
+                    price:{
+                        [Opr.gte]: query.min,
+                        [Opr.lte]: query.max
+                    }
+                }       //attr catId in product, so 'where' have to be in this scope
             }] //foreign key
         };
 
