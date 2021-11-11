@@ -10,7 +10,7 @@ app.use(express.static(__dirname + '/public'));
 //Step 3: cau hinh view engine va set view engine, o day su dung handlebars
 const expressHbs = require('express-handlebars'); //u have to install it by npm first
 const myHelper1 = require('./controllers/helper');
-
+const myHelper2 = require('express-handlebars-paginate');
 const hbs = expressHbs.create({
   extname: 'hbs',
   defaultLayout: 'layout',
@@ -19,7 +19,8 @@ const hbs = expressHbs.create({
   handlebars: allowInsecurePrototypeAccess(Handlebars),
   helpers : {
     createStarList: myHelper1.createStarList,
-    createStars: myHelper1.createStars
+    createStars: myHelper1.createStars,
+    createPagination: myHelper2.createPagination
   }
 });
 

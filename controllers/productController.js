@@ -88,7 +88,7 @@ controller.getAll = (query) => {
         }
 
         Product
-            .findAll(options)
+            .findAndCountAll(options)   //this return {rows, count}
             .then(data => resolve(data))
             .catch(error => reject(new Error(error)));
     });

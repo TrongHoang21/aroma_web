@@ -118,6 +118,11 @@
               </div>
               {{/each}}
             </div>
+            <div class="row justify-content-center">
+              <nav aria-label="Page navigation example" id="paginationTagId">
+                {{{createPagination pagination}}}
+              </nav>
+            </div>
           </section>
           <!-- End Best Seller -->
         </div>
@@ -290,16 +295,37 @@
   }
 
   //FOR VIEW DISPLAY
-  let checkboxes = ['category', 'brand', 'color'];
-  for(let key in checkboxes){
-    let control = $(`#${key}${urlParams.get(key)}`);  //base on id"" of the control
-    if(control){
-      $(control).prop('checked', true); //i only know that this is set prop for 'control'
+  $(document).ready(() => {
+    let checkboxes = ['category', 'brand', 'color'];
+    for(let key in checkboxes){
+      let control = $(`#${key}${urlParams.get(key)}`);  //base on id"" of the control
+      if(control){
+        $(control).prop('checked', true); //i only know that this is set prop for 'control'
+      }
     }
-  }
 
-  $('#sort').val(urlParams.get('sort'));
-  $('#limit').val(urlParams.get('limit'));
+    $('#sort').val(urlParams.get('sort'));
+    $('#limit').val(urlParams.get('limit'));
+
+    //THIS IS FOR PAGINATION
+    $('#paginationTagId li').addClass('page-item');
+    $('#paginationTagId li a').addClass('page-link');
+  
+    //THIS IS FOR MAKING PAGING ITEMS STILL KEEP FULL URL PROPERTIES, BECAUSE IT JUST /products?page=? WHEN INITIALIZED
+    const savePage = urlParams.get('page');
+    $('#paginationTagId li a').each((index, item) => {
+      let page = $(item).attr('href').split('=')[1];
+      urlParams.set('page', page);
+      let href = '/products?' + urlParams.toString();
+      $(item).attr('href', href);
+    });
+    urlParams.set('page', savePage);
+  
+  });
+
+
+
+
   //END INIT PART
 
   //START ON CLICK
