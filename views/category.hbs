@@ -84,14 +84,14 @@
               </select>
             </div>
             <div>
-              <div class="input-group filter-bar-search">
-                <form action="/products" method="GET">
-                <input type="text" name="search" placeholder="Tìm kiếm nè ba">
-                <div class="input-group-append">
-                  <button type="submit"><i class="ti-search"></i></button>
+              <form action="/products" method="GET">
+                <div class="input-group filter-bar-search">
+                  <input type="text" name="search" placeholder="Tìm kiếm nè ba">
+                  <div class="input-group-append">
+                    <button type="submit"><i class="ti-search"></i></button>
+                  </div>
                 </div>
-                </form>
-              </div>
+              </form>
             </div>
           </div>
           <!-- End Filter Bar -->
@@ -297,7 +297,7 @@
   //FOR VIEW DISPLAY
   $(document).ready(() => {
     let checkboxes = ['category', 'brand', 'color'];
-    for(let key in checkboxes){
+    for(let key of checkboxes){
       let control = $(`#${key}${urlParams.get(key)}`);  //base on id"" of the control
       if(control){
         $(control).prop('checked', true); //i only know that this is set prop for 'control'
