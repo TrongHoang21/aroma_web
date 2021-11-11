@@ -266,6 +266,8 @@
 	<!-- ================ Subscribe section end ================= -->		  
 
 <script>
+
+  //INIT PART
   let urlParams = new URLSearchParams(location.search);
   let params = {
     category: 0,
@@ -281,6 +283,7 @@
     }
   }
 
+  //FOR VIEW DISPLAY
   for(let key in params){
     let control = $(`#${key}${urlParams.get(key)}`);  //base on id"" of the control
     if(control){
@@ -288,6 +291,9 @@
     }
   }
 
+  //END INIT PART
+
+  //START ON CLICK
   function selectParam(key, value, reset =false){
     //remember to reset values of all once category clicked
     //do this after i know for sure that there's no null value

@@ -41,6 +41,7 @@ router.get('/', (req, res, next) => {
         })
         .then(data => {
             res.locals.products = data;
+            console.log(data);
             res.render('category');
         })
         .catch(error => next(error));
