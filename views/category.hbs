@@ -70,25 +70,27 @@
           <!-- Start Filter Bar -->
           <div class="filter-bar d-flex flex-wrap align-items-center">
             <div class="sorting">
-              <select>
-                <option value="1">Default sorting</option>
-                <option value="1">Default sorting</option>
-                <option value="1">Default sorting</option>
+              <select id="sort" onchange="selectParam('sort', this.value)">
+                <option value="name">Sort by name</option>
+                <option value="price">Sort by price from lowG to highKick</option>
+                <option value="overallReview">Sort by reviews from highLands to lowKey</option>
               </select>
             </div>
-            <div class="sorting mr-auto">
-              <select>
-                <option value="1">Show 12</option>
-                <option value="1">Show 12</option>
-                <option value="1">Show 12</option>
+            <div id="limit" class="sorting mr-auto">
+              <select onchange="selectParam('limit', this.value)">
+                <option value="9">Show 9</option>
+                <option value="12">Show 12</option>
+                <option value="69">Show 69</option>
               </select>
             </div>
             <div>
               <div class="input-group filter-bar-search">
-                <input type="text" placeholder="Search">
+                <form action="/products" method="GET">
+                <input type="text" name="search" placeholder="Tìm kiếm nè ba">
                 <div class="input-group-append">
-                  <button type="button"><i class="ti-search"></i></button>
+                  <button type="submit"><i class="ti-search"></i></button>
                 </div>
+                </form>
               </div>
             </div>
           </div>
@@ -274,7 +276,11 @@
     brand: 0,
     color: 0,
     min: 0,
-    max: 100
+    max: 100,
+    limit: 9,
+    page: 1,
+    sort: 'name',
+    search: ''
   };
 
   for(let key in params){
@@ -284,13 +290,16 @@
   }
 
   //FOR VIEW DISPLAY
-  for(let key in params){
+  let checkboxes = ['category', 'brand', 'color'];
+  for(let key in checkboxes){
     let control = $(`#${key}${urlParams.get(key)}`);  //base on id"" of the control
     if(control){
       $(control).prop('checked', true); //i only know that this is set prop for 'control'
     }
   }
 
+  $('#sort').val(urlParams.get('sort'));
+  $('#limit').val(urlParams.get('limit'));
   //END INIT PART
 
   //START ON CLICK

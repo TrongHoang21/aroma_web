@@ -37,6 +37,13 @@ controller.getAll = (query) => {
             options.where.categoryId = query.category;
         }
 
+        //THIS IS FOR SEARCHING FUNCTION
+        if(query.search != ''){
+            options.where.name = {
+                [Opr.iLike]: `%${query.search}%`
+            }
+        }
+
         if(query.brand > 0){
             options.where.brandId = query.brand;
         }
@@ -47,6 +54,37 @@ controller.getAll = (query) => {
                 attributes: [],
                 where: {colorId: query.color}   //START CODING HERE (IN FILTER FUNCTION)
             }]
+        }
+
+        //THIS IS FOR PAGING
+        if(query.limit > 0){
+            options.limit = query.limit;
+            options.offset = query.limit * (query.page -1);
+        }
+
+        //THIS IS FOR SORTING
+        if(query.sort){
+            switch(query.sort){
+                case 'name':
+                    options.order = [
+                        ['name', 'ASC']
+                    ];
+                    break;
+                case 'price':
+                    options.order = [
+                        ['price', 'ASC'] 
+                    ];
+                    break;
+                case 'overallReview':
+                    options.order = [
+                        ['overallReview', 'DESC'] 
+                    ];
+                    break;
+                default:
+                    options.order = [
+                        ['name', 'ASC']
+                    ];
+            }
         }
 
         Product

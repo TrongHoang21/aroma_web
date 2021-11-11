@@ -21,6 +21,13 @@ controller.getAll = (query) => {
             }] //foreign key
         };
 
+        //THIS IS FOR SEARCHING FUNCTION  
+        if(query.search != ''){
+            options.include[0].where.name = {
+                [Opr.iLike]: `%${query.search}%`
+            }
+        }
+
         if(query.category > 0){
             options.include[0].where.categoryId = query.category; //this is an array so have to include[0]
         }
@@ -33,7 +40,8 @@ controller.getAll = (query) => {
                 where: {colorId: query.color}
             }];
 
-            //console.log(options.include[0].include)
+
+            //Debug: console.log(options.include[0])
         }
         Brand
             .findAll(options)

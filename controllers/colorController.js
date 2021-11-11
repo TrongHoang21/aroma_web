@@ -28,10 +28,20 @@ controller.getAll = (query) => {
             options.include[0].include[0].where.categoryId = query.category;
         }
 
+        //THIS IS FOR SEARCHING FUNCTION
+        if(query.search != ''){
+            options.include[0].include[0].where.name = {
+                [Opr.iLike]: `%${query.search}%`
+            }
+        }
+        
         if(query.brand > 0) {
             options.include[0].include[0].where.brandId = query.brand;
 
         }
+
+
+
         Color
             .findAll(options)
             .then(data => resolve(data))
