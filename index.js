@@ -27,6 +27,39 @@ const hbs = expressHbs.create({
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 
+///CART
+//Register 3 + 1 + 1 components for CART functionality
+const bodyParser = require('body-parser');
+app.use(bodyParser.json()); //deprecated
+app.use(bodyParser.urlencoded({extended: false}));
+
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
+const session = require('express-session');
+app.use(session({
+  cookie: {httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000},
+  secret: '0r1g1n4L',
+  resave: false,
+  saveUninitialized: false
+}));
+
+//use cart controller
+const Cart = require('./controllers/cartController');
+app.use((req, res, next) => {
+  var cart = new Cart(req.session.cart ? req.session.cart : {});
+  req.session.cart = cart;
+  res.locals.totalQuantity = cart.totalQuantity;
+  next(); //this is to make sure every route using 'cart' pass thru here
+})
+
+//use cart router
+app.use('/cart', require('./routes/cartRouter'));
+///END CART
+
+
+
+
 //step 4: after tao 1 cay thu muc views 25:53, minh define routes
 
 //     //root route
