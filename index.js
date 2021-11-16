@@ -29,9 +29,12 @@ app.set('view engine', 'hbs');
 
 ///CART
 //Register 3 + 1 + 1 components for CART functionality
-const bodyParser = require('body-parser');
-app.use(bodyParser.json()); //deprecated
-app.use(bodyParser.urlencoded({extended: false}));
+// const bodyParser = require('body-parser');
+// app.use(bodyParser.json()); //deprecated
+// app.use(bodyParser.urlencoded({extended: true}));
+// since deprecated, use this instead https://stackoverflow.com/questions/24330014/bodyparser-is-deprecated-express-4
+app.use(express.json()); 
+app.use(express.urlencoded({extended: true}));
 
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());

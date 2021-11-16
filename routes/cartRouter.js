@@ -22,4 +22,35 @@ router.post('/', (req, res, next) => {
     .catch(error => next(error));
 });
 
+//update the cart site
+router.put('/', (req, res) => {
+    var productId = req.body.id;
+    var quantity = parseInt(req.body.quantity);
+    var cartItem = req.session.cart.update(productId, quantity);
+
+    res.json({
+        cartItem: cartItem,
+        totalQuantity: req.session.cart.totalQuantity,
+        totalPrice: req.session.cart.totalPrice
+    });
+});
+
+router.delete('/', (req, res) => {
+    var productId = req.body.id;
+    req.session.cart.remove(productId);
+    res.json({
+        totalQuantity: req.session.cart.totalQuantity,
+        totalPrice: req.session.cart.totalPrice
+    });
+});
+
+router.delete('/all', (req, res) => {
+    
+    req.session.cart.empty();
+    res.sendStatus(204);    //HTTP 204 No Content
+    res.end();  //writing more now is not allowed
+
+
+});
+
 module.exports = router;

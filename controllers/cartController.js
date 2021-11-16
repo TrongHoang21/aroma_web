@@ -48,7 +48,7 @@ module.exports = function Cart(oldCart) {
     };
 
     this.update = (id, quantity) => {
-        var storedItem = this.items[id];
+        var storedItem = this.items[id];        //just two names refer 1 one object, so it's ok to this.items[id].price
         if (storedItem && quantity >= 1) {
             storedItem.quantity = quantity;
             storedItem.price = parseFloat(storedItem.item.price * storedItem.quantity);
