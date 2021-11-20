@@ -73,6 +73,7 @@ app.use('/cart', require('./routes/cartRouter'));
 //03.11.2021 tach rieng routes ra, chi use() trong nay thoi
 app.use("/", require('./routes/indexRouter'));
 app.use("/products", require('./routes/productRouter'));
+app.use("/comments", require('./routes/commentRouter'));
 
 //step 7: video 2 56:00, using sequelize create database auto by routes
 app.get('/sync', (req, res) => {        //DELEGATION i dont understant (res, req), maybe it's a callback
