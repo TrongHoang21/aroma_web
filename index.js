@@ -41,7 +41,7 @@ app.use(cookieParser());
 
 const session = require('express-session');
 app.use(session({
-  cookie: {httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000},
+  cookie: {httpOnly: true, maxAge: null},
   secret: '0r1g1n4L',
   resave: false,
   saveUninitialized: false
@@ -53,6 +53,9 @@ app.use((req, res, next) => {
   var cart = new Cart(req.session.cart ? req.session.cart : {});
   req.session.cart = cart;
   res.locals.totalQuantity = cart.totalQuantity;
+  
+  res.locals.fullname = req.session.user ? req.session.user.fullname : '';
+  res.locals.isLoggedIn = req.session.user ? true: false;
   next(); //this is to make sure every route using 'cart' pass thru here
 })
 
@@ -75,6 +78,7 @@ app.use("/", require('./routes/indexRouter'));
 app.use("/products", require('./routes/productRouter'));
 app.use("/comments", require('./routes/commentRouter'));
 app.use("/reviews", require('./routes/reviewRouter'));
+app.use("/users", require('./routes/userRouter'));
 
 //step 7: video 2 56:00, using sequelize create database auto by routes
 app.get('/sync', (req, res) => {        //DELEGATION i dont understant (res, req), maybe it's a callback
