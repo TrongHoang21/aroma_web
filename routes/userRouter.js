@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
 
-router.get('/login', (req, res) =>{
+router.get('/login', (req, res) => {
+    req.session.returnURL = req.query.returnURL;
+
     res.render('login');
 });
 
@@ -77,7 +79,15 @@ router.post('/login', (req, res, next) => {
                 if(userController.comparePassword(password, user.password)){
                     req.session.cookie.maxAge = keepLoggedIn ? 30 * 24 * 60 * 60 * 1000: null
                     req.session.user = user;
-                    res.redirect('/');
+                    console.log('jaja router 1');
+                    console.log(req.session.returnURL)
+                    if(req.session.returnURL){
+                        res.redirect(req.session.returnURL);
+                    }
+                    else {
+                        res.redirect('/');
+                    }
+                    
                 }
                 else {
                     res.render('login', {

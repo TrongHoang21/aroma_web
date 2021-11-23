@@ -141,6 +141,7 @@
 						</div>
 						<div class="col-lg-6">
 							<div class="review_box">
+								{{#if ../isLoggedIn}}
 								<h4>Post a comment</h4>
 								<form class="row contact_form form-contact form-review mt-3" action="/comments" method="post" id="contactForm" novalidate="novalidate">
 									<!-- Comment Handler -->
@@ -167,6 +168,9 @@
 
 
 								</form>
+								{{else}}
+									<h4>Please login to post a comment! <a href="/users/login?returnURL=/products/{{id}}">Click here, babe!</a></h4>
+								{{/if}}
 							</div>
 						</div>
 					</div>
@@ -208,6 +212,7 @@
 						</div>
 						<div class="col-lg-6">
 							<div class="review_box">
+								{{#if ../isLoggedIn}}
 								<h4>Add a Review</h4>
 								<p>Your Rating:</p>
 								<ul class="list" id="starList">
@@ -218,18 +223,23 @@
 									<li><a><i class="fa fa-star disabled"></i></a></li>
 								</ul>
 								<p id="starName">Outstanding</p>
-                <form action="/reviews" method="POST" class="form-contact form-review mt-3">
-                  <div class="form-group">
-					  <input type="hidden" name="productId" value="{{id}}">
-					  <input type="hidden" name="rating" id="rating" value="{{../userReview.rating}}">
-                  </div>
-				  <div class="form-group">
-                    <textarea class="form-control different-control w-100" name="message" cols="30" rows="5" placeholder="Enter Message">{{../userReview.message}}</textarea>
-                  </div>
-                  <div class="form-group text-center text-md-right mt-3">
-                    <button type="submit" class="button button--active button-review">Submit Now</button>
-                  </div>
-                </form>
+								
+								<form action="/reviews" method="POST" class="form-contact form-review mt-3">
+									<div class="form-group">
+										<input type="hidden" name="productId" value="{{id}}">
+										<input type="hidden" name="rating" id="rating" value="{{../userReview.rating}}">
+									</div>
+									<div class="form-group">
+										<textarea class="form-control different-control w-100" name="message" cols="30" rows="5"
+											placeholder="Enter Message">{{../userReview.message}}</textarea>
+									</div>
+									<div class="form-group text-center text-md-right mt-3">
+										<button type="submit" class="button button--active button-review">Submit Now</button>
+									</div>
+								</form>
+								{{else}}
+								<h4>Please login to post a comment! <a href="/users/login?returnURL=/products/{{id}}">Click here, babe!</a></h4>
+								{{/if}}
 							</div>
 						</div>
 					</div>
